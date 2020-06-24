@@ -15,6 +15,6 @@ public interface IClasseService {
 	
 	public  void modifierClasse(Classe classe);
 
-	public  void deleteClasse(String libelle);
+	public  Boolean deleteClasse(String libelle);
 
 }
