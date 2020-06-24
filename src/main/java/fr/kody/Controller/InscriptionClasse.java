@@ -16,7 +16,7 @@ import fr.kody.Tools.Response;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/InscriptionClasse")
+@RequestMapping("/GestionClasse")
 public class InscriptionClasse {
 	
 	@Autowired
@@ -24,8 +24,8 @@ public class InscriptionClasse {
 	
 	@CrossOrigin
 	@PostMapping("/enregistrement/{libelle}/{filiere}/{niveau}")
-	public Response EnregistrementClasse(@PathVariable("libelle")String libelle, @PathVariable("filiere")String filiere,
-			@PathVariable("niveau")String niveau) {
+	public Response EnregistrementClasse(@PathVariable("libelle") String libelle,
+			@PathVariable("filiere") String filiere, @PathVariable("niveau") String niveau) {
 		Response reponse = new Response();
 		Classe classe = new Classe();
 		classe.setFiliere(filiere);
@@ -33,18 +33,39 @@ public class InscriptionClasse {
 		classe.setNiveau(niveau);
 		classeService.ajouterClasse(classe);
 		reponse.setReturnValue(classe);
-		
+
 		return reponse;
-		
+
 	}
-	
+
 	@CrossOrigin
 	@GetMapping("/listerClasse")
 	public Response listerClasse() {
-		Response reponse = new Response();
-		List<Classe> listClasse = classeService.listerClasse();
+		final Response reponse = new Response();
+		final List<Classe> listClasse = classeService.listerClasse();
 		reponse.setReturnValue(listClasse);
 		return reponse;
 	}
+
+	@CrossOrigin
+	@GetMapping("/modifierClasse")
+	public Response modifierClasse(Classe classe) {
+		final Response reponse = new Response();
+				classeService.modifierClasse(classe);
+				reponse.setReturnValue(classe);
+			return reponse;
+		}
+
+		@CrossOrigin
+		@GetMapping("/supprimerClasse/{libelle}")
+		public Response supprimerClasse (@PathVariable("libelle") String libelle){
+		Response reponse = new Response();
+		boolean verif = false;
+			if(classeService.deleteClasse(libelle)){
+				verif = true;
+			}
+			reponse.setReturnValue(verif);
+			return reponse;
+		}
 
 }

@@ -41,8 +41,10 @@ public class ClasseImpl implements IClasseService {
 	}
 
 	@Override
-	public void deleteClasse(String libelle) {
+	public Boolean deleteClasse(String libelle) {
 	classeRepository.deleteClasse(libelle);
+	boolean reponse = true;
+		return reponse;
 
 	}
 
